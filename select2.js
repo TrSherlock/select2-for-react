@@ -1,5 +1,5 @@
 import { useState,useRef,useEffect } from "react";
-import "./select4.css";
+import "./select2.css";
 function Select2({ data, width, value, keyValue, keyLabel, update }) {
     const selectRef = useRef(null);
     
