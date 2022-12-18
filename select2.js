@@ -5,6 +5,7 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
     
     useEffect(() => {
       const handleClick = (event) => {
+        console.log(selectRef);
         if (selectRef.current && !selectRef.current.contains(event.target)) {
           selectRef.current.classList.remove("select2-container--open");
         }
@@ -30,6 +31,19 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
             mainBoxUl.scrollTop = mainBoxUl.childNodes[index].offsetTop - 120
         }
     }
+
+    const handleClick = (item, i) =>{
+        const mainBox = item.target.closest(".select2.select2-container");
+        mainBox.classList.remove("select2-container--open");
+        // setIndex(i);
+        console.log(update({
+            keyLabel: keyLabel,
+            keyValue: keyValue,
+            item: select[i],
+            value: select[i][keyValue]
+        }));
+    }
+
     const findSelect = i => {
         setFind(i.target.value);
         let updateIndex = index;
@@ -55,14 +69,16 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
         const mainBoxUl = mainBox.querySelector("ul");
         switch (i.keyCode) {
             case 27:
-                console.log("Esc");
+                mainBox.classList.remove("select2-container--open");
                 break;
             case 13:
                 update({
                     keyLabel: keyLabel,
                     keyValue: keyValue,
-                    item: select[index]
+                    item: select[index],
+                    value: select[index][keyValue]
                 })
+                mainBox.classList.remove("select2-container--open");
             break;
             case 38:
                 i.preventDefault();
@@ -117,6 +133,7 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
                                     select.map((e, i) => (
                                         <li key={i}
                                             value={value}
+                                            onClick={(item)=>{handleClick(item, i)}}
                                             className={"select2-results__option hover:bg-violet-300 " + ((i === index) ? "select2-results__option--highlighted" : "")}
                                             data-selected={(i===index) ? "true": ""}
                                             data-disabled="false"
