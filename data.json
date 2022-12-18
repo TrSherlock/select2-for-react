@@ -1,0 +1,82 @@
+[
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "150.F999999.01",
+        "Aciklama": "ALIŞ İADELERİ"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "153.999",
+        "Aciklama": "TİCARİ MAL ALIŞ İADESİ"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.F999999.08.01",
+        "Aciklama": "GIDA DIŞI SATIŞLAR (HAVLU, ELDİVEN VB)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.F999999.18.02",
+        "Aciklama": "POŞET, AMBALAJ VB. SATIŞLAR (FKODU)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.F999999.18.03",
+        "Aciklama": "GIDA DIŞI SATIŞ SATIŞLAR (KOLONYA VB)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107101.01.01",
+        "Aciklama": "TPÜ KDV %01 (FATURALI)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107101.01.08",
+        "Aciklama": "TPÜ KDV %08 (FATURALI)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107101.02.01",
+        "Aciklama": "TPÜ KDV %01 (ÖKC)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107101.02.08",
+        "Aciklama": "TPÜ KDV %08 (ÖKC)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107102.01.01",
+        "Aciklama": "FÜ KDV %01 (FATURALI)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107102.01.08",
+        "Aciklama": "FÜ KDV %08 (FATURALI)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N107102.02.01",
+        "Aciklama": "FÜ KDV %01 (ÖKC)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N472401.01.01",
+        "Aciklama": "UNLU MAMÜLLERİ SATIŞI KDV %01 (ÖKC)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N561019.01.01",
+        "Aciklama": "KAFETERYA, KAHVALTI KDV %01 (ÖKC)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N561019.01.08",
+        "Aciklama": "KAFETERYA, KAHVALTI KDV %08 (ÖKC)"
+    },
+    {
+        "firmaVKN": "1234567890",
+        "Kod": "600.N561019.02.01",
+        "Aciklama": "KAFETERYA, KAHVALTI KDV %01 (FATURALI)"
+    }
+]
