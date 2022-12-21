@@ -32,17 +32,19 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
         }
     }
 
-    const handleClick = (item, i) =>{
-        const mainBox = item.target.closest(".select2.select2-container");
-        mainBox.classList.remove("select2-container--open");
-        // setIndex(i);
-        console.log(update({
-            keyLabel: keyLabel,
-            keyValue: keyValue,
-            item: select[i],
-            value: select[i][keyValue]
-        }));
-    }
+    const handleClick = (item, i) => {
+    const mainBox = item.target.closest(".select2.select2-container");
+    update({
+      keyLabel: keyLabel,
+      keyValue: keyValue,
+      item: select[i],
+      value: select[i][keyValue]
+    });
+    mainBox.classList.remove("select2-container--open");
+    // setIndex(i);
+    setIndex(data.findIndex((f) => f.Kod === value));
+    setSelect([...data]);
+  };
 
     const findSelect = i => {
         setFind(i.target.value);
