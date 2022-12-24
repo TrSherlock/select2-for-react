@@ -2,74 +2,99 @@ import { useState,useRef,useEffect } from "react";
 import "./select2.css";
 function Select2({ data, width, value, keyValue, keyLabel, update }) {
     const selectRef = useRef(null);
-    
+
     useEffect(() => {
-      const handleClick = (event) => {
-        console.log(selectRef);
-        if (selectRef.current && !selectRef.current.contains(event.target)) {
-          selectRef.current.classList.remove("select2-container--open");
-        }
-      };
-    
-      document.addEventListener("click", handleClick);
-    
-      return () => {
-        document.removeEventListener("click", handleClick);
-      };
+        const handleClick = (event) => {
+            // console.log(selectRef);
+            if (selectRef.current && !selectRef.current.contains(event.target)) {
+                selectRef.current.classList.remove("select2-container--open");
+            }
+        };
+
+        document.addEventListener("click", handleClick);
+
+        return () => {
+            document.removeEventListener("click", handleClick);
+        };
     }, []);
 
     const [index, setIndex] = useState(data.findIndex(f => f.Kod === value));
     const [select, setSelect] = useState([...data]);
-    const [find, setFind] = useState("")
+    const [find, setFind] = useState("");
+
     const selectOpen = i => {
         const mainBox = i.target.closest(".select2.select2-container");
         const mainBoxSearch = mainBox.querySelector("input.select2-search__field");
         const mainBoxUl = mainBox.querySelector("ul");
         mainBox.classList.toggle("select2-container--open")
         mainBoxSearch.focus();
-        if(index !== -1){
-            mainBoxUl.scrollTop = mainBoxUl.childNodes[index].offsetTop - 120
+        if (index !== -1) {
+            mainBoxUl.scrollTop = mainBoxUl?.childNodes[index]?.offsetTop - 120
+        } else if(value === ""){
+            setIndex(-1);
+            mainBoxUl.scrollTop = 0;
+            // setSelect([...data]);
         }
     }
 
-    const handleClick = (item, i) => {
-    const mainBox = item.target.closest(".select2.select2-container");
-    update({
-      keyLabel: keyLabel,
-      keyValue: keyValue,
-      item: select[i],
-      value: select[i][keyValue]
-    });
-    mainBox.classList.remove("select2-container--open");
-    // setIndex(i);
-    setIndex(data.findIndex((f) => f.Kod === value));
-    setSelect([...data]);
-  };
+    const selectClick = (item, i) => {
+        const mainBox = item.target.closest(".select2.select2-container");
+        update({
+            keyLabel: keyLabel,
+            keyValue: keyValue,
+            item: select[i],
+            value: select[i][keyValue]
+        });
+        mainBox.classList.remove("select2-container--open");
+        // setIndex(i);
+        // const findIndex = data.findIndex((f) => f.Kod === value)
+        setIndex(i);
+        setSelect([...data]);
+        setFind("")
+    }
 
     const findSelect = i => {
         setFind(i.target.value);
         let updateIndex = index;
         const mainBox = i.target.closest(".select2.select2-container");
         const mainBoxUl = mainBox.querySelector("ul");
-        if(i.target.value === ""){
+        console.log(mainBoxUl.childNodes.length);
+        if (i.target.value === "") {
+            // setIndex(data.findIndex(f => f.Kod === value));
+            updateIndex = (value === "") ? 0 : data.findIndex(f => f.Kod === value);
+            setIndex(updateIndex);
             setSelect([...data]);
-            setIndex(data.findIndex(f => f.Kod === value));
-            (value === "") ? setIndex(0): setIndex(data.findIndex(f => f.Kod === value));
         } else {
-            setSelect(data.filter(f => f[keyLabel].toLocaleUpperCase().includes(i.target.value.toLocaleUpperCase())))
-            setIndex(0);
+            const filterData = select.filter(f => f[keyLabel].toLocaleUpperCase().includes(i.target.value.toLocaleUpperCase()))
+            setSelect([...filterData]);
+
+            updateIndex = filterData.findIndex(f => f.Kod === value);
+            // console.log(updateIndex, select);
+            if (updateIndex === -1) {
+                setIndex(0);
+
+            } else {
+                setIndex(updateIndex);
+            }
+            setSelect([...filterData])
         }
-        if(mainBoxUl.childNodes.length !== 0){
-            mainBoxUl.scrollTop = mainBoxUl.childNodes[updateIndex].offsetTop - 120
+        if (mainBoxUl.childNodes.length !== 0) {
+            mainBoxUl.scrollTop = mainBoxUl?.childNodes?.[updateIndex]?.offsetTop - 120
         }
     }
 
-    const upDown = (i) => {
+    const upDown = (i, what) => {
         const lastIndex = select.lastIndexOf(select.at(-1));
         let updateIndex = index;
         const mainBox = i.target.closest(".select2.select2-container");
         const mainBoxUl = mainBox.querySelector("ul");
+        
         switch (i.keyCode) {
+            case 8:
+                if(what === "up"){
+                    // console.log(eval("10e5"));
+                }
+                break;
             case 27:
                 mainBox.classList.remove("select2-container--open");
                 break;
@@ -81,27 +106,33 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
                     value: select[index][keyValue]
                 })
                 mainBox.classList.remove("select2-container--open");
-            break;
+                break;
             case 38:
-                i.preventDefault();
-                updateIndex = (updateIndex === 0) ? lastIndex: index - 1
-                setIndex(updateIndex);
-                console.log({
-                    index: index,
-                    updateIndex: updateIndex
-                });
-            break;
+                if(what === "down"){
+                    // console.log(eval("10e5"));
+                    i.preventDefault();
+                    updateIndex = (updateIndex === 0) ? lastIndex : index - 1
+                    setIndex(updateIndex);
+                    console.log({
+                        index: index,
+                        updateIndex: updateIndex
+                    });
+                }
+                break;
             case 40:
-                i.preventDefault();
-                updateIndex = (index === lastIndex) ? 0: index + 1
-                setIndex(updateIndex);
-            break;
+                if(what === "up"){
+                    // console.log(eval("10e5"));
+                    i.preventDefault();
+                    updateIndex = (index === lastIndex) ? 0 : index + 1
+                    setIndex(updateIndex);
+                }
+                break;
             default:
-            break;
+                break;
         }
         
-        if(mainBoxUl.childNodes.length !== 0){
-            mainBoxUl.scrollTop = mainBoxUl.childNodes[updateIndex].offsetTop - 120
+        if (what === "up" && mainBoxUl.childNodes.length !== 0) {
+            mainBoxUl.scrollTop = mainBoxUl?.childNodes[updateIndex]?.offsetTop - 120
         }
     }
 
@@ -124,7 +155,8 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
                                 value={find}
                                 // onKeyDown={(item) => { upDown(item, "down") }}
                                 onChange={findSelect}
-                                onKeyDown={upDown}
+                                onKeyDown={(keyDown)=>{upDown(keyDown, "down")}}
+                                onKeyUp={(keyUp)=>{upDown(keyUp, "up")}}
                                 className="select2-search__field" type="search"
                                 autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                             />
@@ -135,15 +167,15 @@ function Select2({ data, width, value, keyValue, keyLabel, update }) {
                                     select.map((e, i) => (
                                         <li key={i}
                                             value={value}
-                                            onClick={(item)=>{handleClick(item, i)}}
+                                            onClick={(item) => { selectClick(item, i) }}
                                             className={"select2-results__option hover:bg-violet-300 " + ((i === index) ? "select2-results__option--highlighted" : "")}
-                                            data-selected={(i===index) ? "true": ""}
+                                            data-selected={(i === index) ? "true" : ""}
                                             data-disabled="false"
                                         >{e[keyLabel]}</li>
                                     ))
                                 }
                             </ul>
-                            
+
                         </div>
                     </div>
                 </div>
